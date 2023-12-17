@@ -15,16 +15,18 @@ let isShuffle = false;
 
 // Function to update the video playlist displayed in the UI
 function updatePlayList(playlist){
-    // Write your code here for task 1
+    // TODO: Write your code here for task 1
     // Clear the html of the videoList element.
-
+    videoList.innerHTML = '';
     // Traverse over the playlist.
-
+    playlist.forEach(video => {
     // For each video, create an <li> element.
-
+        let listEl = document.createElement('li');
     // Display the video title in the <li>.
-
+        listEl.innerHTML = video.title;
     // Append the <li> element to the videoList.
+        videoList.append(listEl);
+    });
 }
 
 // Function to update the UI with video information
@@ -47,10 +49,12 @@ function playvideo(playlist) {
 
 // Event delegation for video selection in the playlist
 videoList.addEventListener('click', (e) => {
-    // Write your code here for task 2
+    // TODO Write your code here for task 2
     // Find the index of the list-item (video-title) clicked
-
+    currentvideoIndex = [...videoList.children].indexOf(e.target);
     // Call the playvideo() function and pass the shuffled videos or originalList as argument on the basis of isShuffle flag's value.
+    playvideo(isShuffle ? videos : originalList);
+
 });
 
 // Event listeners for play, next, and previous buttons
@@ -60,24 +64,28 @@ document.getElementById('play-button').addEventListener('click', () => {
 
 document.getElementById('next-button').addEventListener('click', () => {
     // Move to the next video and play it
-    // Write your code here for task 3
+    // TODO: Write your code here for task 3
     // Increase the current video index by 1.
-
+    currentvideoIndex++;
     // If the current video index becomes equal to the length of the playlist, then set the current index to 0.
-
+    if(currentvideoIndex === videos.length) {
+        currentvideoIndex = 0;
+    }
     // Play the selected video, considering the shuffle state
-
+    playvideo(isShuffle ? videos : originalList);
 });
 
 document.getElementById('prev-button').addEventListener('click', () => {
     // Move to the previous video and play it
-    // Write your code here for task 4
+    // TODO: Write your code here for task 4
     // Decrease the current video index by 1.
-
-    // If the current video index becomes equal to the length of the playlist, then set the current index to 0.
-
+    currentvideoIndex--;
+    // If the current video index becomes less than 0 then set index to the length of playlist -1
+    if(currentvideoIndex < 0 ) {
+        currentvideoIndex = videos.length -1;
+    }
     // Play the selected video, considering the shuffle state.
-
+    playvideo(isShuffle ? videos : originalList);
 });
 
 // Function to shuffle the array in place
